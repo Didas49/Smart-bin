@@ -1,0 +1,46 @@
+#include <Servo.h>   // Include the servo library
+
+// Create a servo object
+Servo sg90;
+
+// Pin definitions
+const int signalPin = A0;  // The analog pin connected to the sensor's signal pin (A)
+const int servopin = 9;    // The PWM pin connected to the servo's signal wire
+
+// Variables for distance measurement
+int sensorValue;
+int distance;
+
+void setup() {
+  // Attach the servo to the defined pin
+  sg90.attach(servopin);
+
+  // Initialize the analog pin for the sensor
+  pinMode(signalPin, INPUT);
+
+  // Start serial communication for debugging
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Read the analog value from the ultrasonic sensor
+  sensorValue = analogRead(signalPin);
+
+  // Convert the analog value to a distance in cm (calibrate this as needed)
+  distance = map(sensorValue, 0, 1023, 0, 100);  // Adjust mapping as needed for accuracy
+
+  // Print the distance to the serial monitor for debugging
+  Serial.print("Distance: ");
+  Serial.println(distance);
+
+  // Check if the distance is below the threshold to open the bin
+  if (distance < 30) {  // If an object is detected within 30 cm
+    sg90.write(0);  // Open the lid (move the servo to 0 degrees)
+    delay(500);     // Keep the lid open for a short time (500ms)
+  } else {
+    sg90.write(180); // Close the lid (move the servo to 180 degrees)
+  }
+
+  // Optional short delay before the next measurement cycle
+  delay(200); // This reduces the waiting time for the next loop
+}

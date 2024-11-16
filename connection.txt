@@ -1,0 +1,10 @@
+
+For the smart bin project, 
+we connected the ultrasonic sensor with its pins as follows:
+the negative (-) pin to GND, the positive (+) pin to the 5V power on the Arduino,
+and the signal (A) pin to analog pin A0.
+
+The servo motor was connected with its power and ground pins to the 5V and GND on the Arduino, 
+and the control signal pin to digital pin D9. 
+
+Jumper wires were used to establish these connections, ensuring proper power and data flow between the components
